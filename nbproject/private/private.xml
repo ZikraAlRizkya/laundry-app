@@ -26,6 +26,14 @@
             <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/web/Zikra/Laporan.jsp</file>
             <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/web/Agung/ManajemenLayanan.jsp</file>
             <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/src/java/Zikra/Controller/EditProfileAdminController.java</file>
+            <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/src/java/Aril/Model/DBConnection.java</file>
+            <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/src/java/Aril/Model/Order.java</file>
+            <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/src/java/Aril/Model/OrderDAO.java</file>
+            <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/src/java/Agung/Controller/ServletAgung.java</file>
+            <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/src/java/Aril/Controller/PickupServlet.java</file>
+            <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/web/Aril/pickup_form.jsp</file>
+            <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/web/Aril/pickup_list.jsp</file>
+            <file>file:/C:/Users/Muhammad%20Zikra/Downloads/Laundry_1_1_1_3_1/web/Aril/receipt.jsp</file>
         </group>
     </open-files>
 </project-private>
