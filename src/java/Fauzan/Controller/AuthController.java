@@ -123,6 +123,7 @@ public class AuthController extends HttpServlet {
             user.setId(rs.getInt("user_id"));
             user.setEmail(rs.getString("email"));
             user.setRole(rs.getString("role"));
+            user.setFirstName(rs.getString("first_name"));
 
             HttpSession session = request.getSession(true);
             session.setAttribute("user", user);

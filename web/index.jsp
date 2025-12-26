@@ -135,10 +135,13 @@
 
     <div class="hero">
         <div class="hero-icon">
-            <i class="fa-solid fa-soap"></i>
+            <h1>
+                <i class="fa-brands fa-opencart"></i>
+                WashUp
+            </h1>
         </div>
 
-        <h1>Laundry Jadi Lebih Mudah</h1>
+        <h2 style="font-size: 30px">Laundry Jadi Lebih Mudah</h2>
         <p>
             Tidak perlu ribet mencuci sendiri.  
             Cukup antar pakaian Anda, kami yang urus hingga bersih, rapi, dan siap dipakai.

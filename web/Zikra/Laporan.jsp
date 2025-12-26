@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/includes/sidebarAdmin.jsp" %>
+<%@ include file="/WEB-INF/includes/navbar.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,180 +15,96 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Admin Page</title>
+        <style>
+            .card .card-title {
+  font-size: 13px;   /* judul kecil */
+  font-weight: 600;
+}
+
+.card .h2 {
+  font-size: 18px;   /* angka utama lebih kecil */
+}
+
+.card p {
+  font-size: 12px;   /* deskripsi bawah */
+}
+
+        </style>
     </head>
     <body>
-        <%
-            String currentPage = request.getServletPath();
-        %>
-        <div class="sidebar">
-
-            <!-- Header -->
-            <div class="sidebar-header">
-                <h4>Admin Panel</h4>
-                <span>Dashboard</span>
-            </div>
-
-            <!-- Menu -->
-            <div class="sidebar-menu">
-                <a href="${pageContext.request.contextPath}/Zikra/ProfilAdmin.jsp" class="<%= currentPage.equals("/Zikra/ProfilAdmin.jsp") ? "active" : "" %>">
-                    <i class="fa-solid fa-user"></i>
-                    Profil
-                </a>
-
-                <a href="${pageContext.request.contextPath}/Fauzan/ManajemenPelanggan.jsp" class="<%= currentPage.equals("/Fauzan/ManajemenPelanggan.jsp") ? "active" : "" %>">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                    Manajemen Pelanggan
-                </a>
-
-                <a href="${pageContext.request.contextPath}/Agung/ManajemenLayanan.jsp" class="<%= currentPage.equals("/Agung/ManajemenLayanan.jsp") ? "active" : "" %>">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                    Manajemen Layanan
-                </a>
-
-                <a href="${pageContext.request.contextPath}/LaporanController?user_id=${user.id}" class="<%= currentPage.equals("/Zikra/Laporan.jsp") ? "active" : "" %>">
-                    <i class="fa-solid fa-file-lines"></i>
-                    Laporan & Statistik
-                </a>
-            </div>
-            <!-- Footer -->
-            <div class="sidebar-footer">
-                <a href="${pageContext.request.contextPath}/index.jsp">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    Logout
-                </a>
-            </div>
-        </div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-left: 240px" >
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/LaporanController?user_id=${user.id}">
-                        <i class="fa-solid fa-house"></i>
-                    </a>
-                </div>
-            </div>
-            <i class="fa-regular fa-bell" style="margin-right: 30px"></i>
-            <div class="ms-auto d-flex align-items-center" style="margin-right: 5px">
-                <span class="navbar-text me-2">
-                    <a class="nav-link d-flex align-items-center gap-2" href="${pageContext.request.contextPath}/Zikra/ProfilAdmin.jsp">
-                        <div class="text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 30px; height: 30px; background-color: #e9ecef; margin-right:10px">
-                            <i class="fa-solid fa-user"></i>
-                         </div>
-                        ${userDetail.firstName}
-                    </a>
-                </span>
-            </div>
-        </div>
-        </nav>    
         <!-- KONTEN UTAMA -->
         <div class="content" style="position: relative; padding-bottom: 80px;">
             <h1 style="color: white; margin-bottom:50px">Laporan & Statistik</h1>
-            
+
             <div class="container">
                 <div class="row" style="margin-bottom:50px">
-                    <div class="col-6 d-flex justify-content-start">
-                        
-                        <div style="width: 27rem;">
-                           
-                                <div class="card card-stats mb-4 mb-lg-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Total Pelanggan</h5>
-                                                <span class="h2 font-weight-bold mb-0">${userDetail.totalPelanggan}</span>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="bg-danger text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
-                                                    <i class="fa-solid fa-star"></i>
-                                                </div>
-                                            </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0 shadow border-0">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <span class="h2 font-weight-bold mb-0 text-danger">${userDetail.totalPelanggan}</span>
+                                        <h5 class="card-title text-muted mb-0" style="font-size: 0.8rem;">Total Pelanggan</h5>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-danger" style="font-size: 1.5rem;">
+                                            <i class="fa-solid fa-user"></i>
                                         </div>
-                                        <p class="mt-3 mb-0 text-muted text-sm">
-                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                            <span class="text-nowrap">Since last month</span>
-                                        </p>
                                     </div>
                                 </div>
-                        </div> 
-                    </div>
-                    <div class="col-6 d-flex justify-content-start">
-                        <div style="width: 27rem;">
-                            <a href="${pageContext.request.contextPath}/Aril/PesananDiterimaAdmin.jsp" style="text-decoration: none; color: inherit;">
-                                <div class="card card-stats mb-4 mb-lg-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Total Pendapatan</h5>
-                                                <span id="txtPendapatan" class="h2 font-weight-bold mb-0"></span>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="bg-warning text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="mt-3 mb-0 text-muted text-sm">
-                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                            <span class="text-nowrap">Since last month</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>                           
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="row" style="margin-bottom:50px">
-                    <div class="col-6 d-flex justify-content-start">
-                        
-                        <div style="width: 27rem;">
-                            <a href="${pageContext.request.contextPath}/Aril/PesananDiprosesAdmin.jsp" style="text-decoration: none; color: inherit;">
-                                <div class="card card-stats mb-4 mb-lg-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Total Pesanan</h5>
-                                                <span class="h2 font-weight-bold mb-0">${userDetail.totalPesanan}</span>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="bg-primary text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
-                                                    <i class="fa-solid fa-shirt"></i>
-                                                </div>
-                                            </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0 shadow border-0">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <span class="h2 font-weight-bold mb-0 text-warning">${userDetail.totalPesanan}</span>
+                                        <h5 class="card-title text-muted mb-0" style="font-size: 0.8rem;">Total Pesanan</h5>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-warning" style="font-size: 1.5rem;">
+                                            <i class="fa-solid fa-basket-shopping"></i>
                                         </div>
-                                        <p class="mt-3 mb-0 text-muted text-sm">
-                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                            <span class="text-nowrap">Since last month</span>
-                                        </p>
                                     </div>
                                 </div>
-                            </a>                                                     
+                            </div>
                         </div>
                     </div>
-                    <div class="col-6 d-flex justify-content-start">
-                        <div style="width: 27rem;">
-                            <a href="${pageContext.request.contextPath}/Aril/PesananSiapDiambilAdmin.jsp" style="text-decoration: none; color: inherit;">
-                                <div class="card card-stats mb-4 mb-lg-0 shadow">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col">
-                                                <h5 class="card-title text-uppercase text-muted mb-0">Rata Rata Pendapatan</h5>
-                                                <span id="txtRatarata" class="h2 font-weight-bold mb-0"></span>
-                                            </div>
-                                            <div class="col-auto">
-                                                <div class="bg-success text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
-                                                    <i class="fa-solid fa-check"></i>
-                                                </div>
-                                            </div>
+
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0 shadow border-0">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <span id="txtPendapatan" class="h2 font-weight-bold mb-0 text-success"></span>
+                                        <h5 class="card-title text-muted mb-0" style="font-size: 0.8rem;">Total Pendapatan</h5>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-success" style="font-size: 1.5rem;">
+                                            <i class="fa-solid fa-sack-dollar"></i>
                                         </div>
-                                        <p class="mt-3 mb-0 text-muted text-sm">
-                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                            <span class="text-nowrap">Since last month</span>
-                                        </p>
                                     </div>
                                 </div>
-                            </a>
-                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6">
+                        <div class="card card-stats mb-4 mb-xl-0 shadow border-0">
+                            <div class="card-body">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <span id="txtRatarata" class="h2 font-weight-bold mb-0 text-info"></span>
+                                        <h5 class="card-title text-muted mb-0" style="font-size: 0.8rem;">Rata Rata Pendapatan</h5>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="text-info" style="font-size: 1.5rem;">
+                                            <i class="fa-solid fa-money-bill-trend-up"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

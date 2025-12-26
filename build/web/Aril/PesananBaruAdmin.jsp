@@ -3,6 +3,8 @@
 <%@page import="java.util.*"%>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="java.util.Locale"%>
+<%@ include file="/WEB-INF/includes/sidebarAdmin.jsp" %>
+<%@ include file="/WEB-INF/includes/navbar.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -161,34 +163,7 @@
   </head>
 
   <body>
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link" href="${pageContext.request.contextPath}/Zikra/Admin.jsp">
-              <i class="fa-solid fa-house"></i>
-            </a>
-          </div>
-        </div>
-
-        <i class="fa-regular fa-bell" style="margin-right: 30px"></i>
-
-        <div class="ms-auto d-flex align-items-center" style="margin-right: 5px">
-          <span class="navbar-text me-2">
-            <a class="nav-link d-flex align-items-center gap-2" href="${pageContext.request.contextPath}/Zikra/ProfilAdmin.jsp">
-              <div
-                class="text-white rounded-circle shadow d-flex justify-content-center align-items-center"
-                style="width: 30px; height: 30px; background-color: #e9ecef; margin-right:10px"
-              >
-                <i class="fa-solid fa-user"></i>
-              </div>
-              Zikra
-            </a>
-          </span>
-        </div>
-      </div>
-    </nav>
+    
 
     <%
       String currentStatus = "pending";

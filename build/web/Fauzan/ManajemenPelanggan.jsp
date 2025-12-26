@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*, Fauzan.Model.User, Fauzan.Controller.DBConnection" %>
+<%@ include file="/WEB-INF/includes/sidebarAdmin.jsp" %>
+<%@ include file="/WEB-INF/includes/navbar.jsp" %>
 
 <%
     User admin = (User) session.getAttribute("user");
@@ -33,65 +35,6 @@
 </head>
 
 <body>
-<%
-    String currentPage = request.getServletPath();
-%>
-
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <div class="sidebar-header">
-        <h4>Admin Panel</h4>
-        <span>Dashboard</span>
-    </div>
-
-    <div class="sidebar-menu">
-        <a href="${pageContext.request.contextPath}/EditProfileAdminController?user_id=${user.id}"
-           class="<%= currentPage.equals("/Zikra/ProfilAdmin.jsp") ? "active" : "" %>">
-            <i class="fa-solid fa-user"></i> Profil
-        </a>
-
-        <a href="${pageContext.request.contextPath}/Fauzan/ManajemenPelanggan.jsp"
-           class="<%= currentPage.equals("/Fauzan/ManajemenPelanggan.jsp") ? "active" : "" %>">
-            <i class="fa-solid fa-basket-shopping"></i> Manajemen Pelanggan
-        </a>
-
-        <a href="${pageContext.request.contextPath}/Agung/ManajemenLayanan.jsp"
-           class="<%= currentPage.equals("/Agung/ManajemenLayanan.jsp") ? "active" : "" %>">
-            <i class="fa-solid fa-clock-rotate-left"></i> Manajemen Layanan
-        </a>
-
-        <a href="${pageContext.request.contextPath}/LaporanStatistikController?user_id=${user.id}"
-           class="<%= currentPage.equals("/Zikra/Laporan.jsp") ? "active" : "" %>">
-            <i class="fa-solid fa-file-lines"></i> Laporan & Statistik
-        </a>
-    </div>
-
-    <div class="sidebar-footer">
-        <a href="${pageContext.request.contextPath}/index.jsp">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-        </a>
-    </div>
-</div>
-
-<!-- TOP NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-left:240px">
-    <div class="container-fluid">
-        <a class="nav-link" href="${pageContext.request.contextPath}/LaporanController?user_id=${user.id}">
-            <i class="fa-solid fa-house"></i>
-        </a>
-
-        <i class="fa-regular fa-bell ms-auto me-4"></i>
-
-        <a class="nav-link d-flex align-items-center gap-2"
-           href="${pageContext.request.contextPath}/EditProfileAdminController?user_id=${user.id}">
-            <div class="rounded-circle d-flex justify-content-center align-items-center"
-                 style="width:30px;height:30px;background:#e9ecef">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            ${userDetail.firstName}
-        </a>
-    </div>
-</nav>
 
 <!-- MAIN CONTENT -->
 <div class="content" style="
