@@ -60,7 +60,7 @@
             <i class="fa-solid fa-clock-rotate-left"></i> Manajemen Layanan
         </a>
 
-        <a href="${pageContext.request.contextPath}/Zikra/Laporan.jsp"
+        <a href="${pageContext.request.contextPath}/LaporanStatistikController?user_id=${user.id}"
            class="<%= currentPage.equals("/Zikra/Laporan.jsp") ? "active" : "" %>">
             <i class="fa-solid fa-file-lines"></i> Laporan & Statistik
         </a>

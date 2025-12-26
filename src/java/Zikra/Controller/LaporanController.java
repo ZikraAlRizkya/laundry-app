@@ -33,11 +33,11 @@ public class LaporanController extends HttpServlet {
                 
                 String sql2 = "SELECT "
                         + "COUNT(CASE WHEN status = 'pending' THEN 1 END) AS baru, "
-                        + "COUNT(CASE WHEN status = 'process' THEN 1 END) AS diterima, "
+                        + "COUNT(CASE WHEN status = 'received' THEN 1 END) AS diterima, "
                         + "COUNT(CASE WHEN status = 'process' THEN 1 END) AS proses, "
                         + "COUNT(CASE WHEN status = 'ready to taken' THEN 1 END) AS ambil "
                         + "FROM orders";
-                
+                  
                 ResultSet rs = db.getData(sql);
                 if (rs.next()) {
                     userDetail.setTotalPesananUser(rs.getInt("aktif"));

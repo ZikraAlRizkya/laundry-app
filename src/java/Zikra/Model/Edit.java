@@ -24,11 +24,47 @@ public class Edit {
     private int totalDiterimaAdmin;
     private int totalDiprosesAdmin;
     private int totalSiapDiambilAdmin;
+    private int totalPelanggan;
+    private int totalPendapatan;
+    private int totalPesanan;
+    private double rataRataPendapatanPerHari;
 
     // ===== Constructor =====
     public Edit() {}
 
     // ===== Getters & Setters =====
+    
+    public int getTotalPelanggan(){
+        return totalPelanggan;
+    }
+    
+    public void setTotalPelanggan(int totalPelanggan){
+        this.totalPelanggan = totalPelanggan;
+    }
+    
+    public int getTotalPendapatan(){
+        return totalPendapatan;
+    }
+    
+    public void setTotalPendapatan(int totalPendapatan){
+        this.totalPendapatan = totalPendapatan;
+    }
+    
+    public int getTotalPesanan(){
+        return totalPesanan;
+    }
+    
+    public void setTotalPesanan(int totalPesanan){
+        this.totalPesanan = totalPesanan;
+    }
+    
+    public double getRataRataPendapatanPerHari(){
+        return rataRataPendapatanPerHari;
+    }
+    
+    public void setRataRataPendapatanPerHari(double rataRataPendapatanPerHari){
+        this.rataRataPendapatanPerHari = rataRataPendapatanPerHari;
+    }
     
     public int getTotalPesananUser(){
         return totalPesananUser;

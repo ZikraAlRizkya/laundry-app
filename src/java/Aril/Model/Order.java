@@ -1,37 +1,77 @@
 package Aril.Model;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
 public class Order {
-    private int id;
-    private String nota;
+
+    private int orderId;
+
+    private int userId;
+
     private String customerName;
-    private int total;
+
+    private BigDecimal totalPrice;
+
     private String status;
 
-    private String paymentMethod;
-    private Integer amountPaid;
-    private String receiverName;
+    private Timestamp orderDate;
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    private Timestamp pickupDate;
 
-    public String getNota() { return nota; }
-    public void setNota(String nota) { this.nota = nota; }
+    public int getOrderId() {
+        return orderId;
+    }
 
-    public String getCustomerName() { return customerName; }
-    public void setCustomerName(String customerName) { this.customerName = customerName; }
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
-    public int getTotal() { return total; }
-    public void setTotal(int total) { this.total = total; }
+    public int getUserId() {
+        return userId;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-    public String getPaymentMethod() { return paymentMethod; }
-    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
+    public String getCustomerName() {
+        return customerName;
+    }
 
-    public Integer getAmountPaid() { return amountPaid; }
-    public void setAmountPaid(Integer amountPaid) { this.amountPaid = amountPaid; }
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
-    public String getReceiverName() { return receiverName; }
-    public void setReceiverName(String receiverName) { this.receiverName = receiverName; }
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Timestamp getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Timestamp orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public Timestamp getPickupDate() {
+        return pickupDate;
+    }
+
+    public void setPickupDate(Timestamp pickupDate) {
+        this.pickupDate = pickupDate;
+    }
 }

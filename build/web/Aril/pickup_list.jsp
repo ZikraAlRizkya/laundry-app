@@ -1,106 +1,96 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.List"%>
-<%@page import="java.text.NumberFormat"%>
-<%@page import="java.util.Locale"%>
-<%@page import="model.Order"%>
+<%@page import="java.util.*"%>
+<%@page import="java.text.*"%>
+<%@page import="java.math.BigDecimal"%>
+
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Pembayaran & Pengambilan</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <style>
-    body{font-family:Arial,sans-serif;margin:0;background:#f5f7fb;color:#111827;}
-    .wrap{max-width:1000px;margin:24px auto;padding:0 16px;}
-    .topbar{background:#fff;border-bottom:1px solid #e5e7eb;}
-    .topbar .inner{max-width:1000px;margin:0 auto;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;}
-    .brand{font-weight:800;}
-    .btn{display:inline-block;padding:8px 12px;border-radius:6px;text-decoration:none;border:1px solid #d1d5db;background:#fff;color:#111827;font-weight:700;}
-    .btn:hover{background:#f3f4f6;}
-    .btn-primary{background:#2563eb;border-color:#2563eb;color:#fff;}
-    .btn-primary:hover{background:#1d4ed8;}
-    .card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:14px;margin-top:16px;}
-    h1{margin:0;font-size:20px;}
-    .muted{color:#6b7280;margin-top:6px;font-size:13px;}
-    .toolbar{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px;}
-    input[type="text"]{padding:8px 10px;border:1px solid #d1d5db;border-radius:6px;width:260px;}
-    table{width:100%;border-collapse:collapse;margin-top:12px;}
-    th,td{padding:10px;border-top:1px solid #e5e7eb;text-align:left;font-size:14px;}
-    th{background:#f9fafb;font-weight:800;color:#374151;}
-    .right{text-align:right;}
-    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;border:1px solid #fed7aa;background:#fff7ed;color:#9a3412;}
-    .empty{padding:18px;color:#6b7280;text-align:center;}
-  </style>
-</head>
-<body>
-<%
-  String ctx = request.getContextPath();
-  List<Order> orders = (List<Order>) request.getAttribute("orders");
-  NumberFormat rupiah = NumberFormat.getCurrencyInstance(new Locale("id","ID"));
-%>
+  <head>
+    <meta charset="UTF-8">
+    <title>Pickup List</title>
 
-<div class="topbar">
-  <div class="inner">
-    <div class="brand">Laundry Admin</div>
-    <a class="btn" href="<%= ctx %>/pickup/list">Refresh</a>
-  </div>
-</div>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    >
 
-<div class="wrap">
-  <div class="card">
-    <h1>Daftar Pesanan Siap Diambil</h1>
-    <div class="muted">Klik Proses untuk konfirmasi pembayaran & pengambilan.</div>
+    <style>
+      body {
+        margin: 0;
+        padding: 24px;
+        background: #f5f7fb;
+        font-family: Arial, sans-serif;
+      }
+      .card { border-radius: 14px; }
+      .muted { color: #6b7280; font-size: 14px; }
+    </style>
+  </head>
 
-    <div class="toolbar">
-      <div></div>
-      <input id="q" type="text" placeholder="Cari nota / pelanggan..." onkeyup="filterTable()"/>
+  <body>
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h3 class="m-0">Laundry Admin</h3>
+
+      <a class="btn btn-outline-primary" href="<%= request.getContextPath() %>/pickup/list">
+        Refresh
+      </a>
     </div>
 
-    <%
-      if (orders == null || orders.isEmpty()) {
-    %>
-      <div class="empty">Belum ada data (atau belum ada pesanan status SIAP_DIAMBIL).</div>
-    <%
-      } else {
-    %>
-    <table id="tbl">
-      <thead>
-        <tr>
-          <th>No Nota</th>
-          <th>Pelanggan</th>
-          <th class="right">Total</th>
-          <th>Status</th>
-          <th class="right">Aksi</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% for (Order o : orders) { %>
-        <tr>
-          <td><b><%= o.getNota() %></b></td>
-          <td><%= o.getCustomerName() %></td>
-          <td class="right"><%= rupiah.format(o.getTotal()) %></td>
-          <td><span class="badge"><%= o.getStatus() %></span></td>
-          <td class="right">
-            <a class="btn btn-primary" href="<%= ctx %>/pickup/form?id=<%= o.getId() %>">Proses</a>
-          </td>
-        </tr>
-      <% } %>
-      </tbody>
-    </table>
-    <% } %>
-  </div>
-</div>
+    <div class="card p-4">
+      <h5 class="mb-1">Daftar Pesanan Siap Diambil</h5>
+      <div class="muted mb-3">
+        Status: <b>ready to taken</b>
+      </div>
 
-<script>
-function filterTable(){
-  var q = document.getElementById("q").value.toLowerCase();
-  var tbl = document.getElementById("tbl");
-  if(!tbl) return;
-  var rows = tbl.getElementsByTagName("tr");
-  for (var i=1;i<rows.length;i++){
-    var t = rows[i].innerText.toLowerCase();
-    rows[i].style.display = t.indexOf(q) > -1 ? "" : "none";
-  }
-}
-</script>
-</body>
+      <%
+        List<Map<String, Object>> orders =
+          (List<Map<String, Object>>) request.getAttribute("orders");
+
+        NumberFormat rupiah =
+          NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+      %>
+
+      <% if (orders == null || orders.isEmpty()) { %>
+        <div class="text-center text-muted py-4">
+          Belum ada data (atau belum ada pesanan status <b>ready to taken</b>).
+        </div>
+      <% } else { %>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Pelanggan</th>
+                <th class="text-end">Total</th>
+                <th>Status</th>
+                <th class="text-end">Aksi</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% for (Map<String, Object> o : orders) { %>
+                <tr>
+                  <td><b>#<%= o.get("order_id") %></b></td>
+                  <td><%= o.get("customer") %></td>
+                  <td class="text-end">
+                    <%= rupiah.format((BigDecimal) o.get("total_price")) %>
+                  </td>
+                  <td>
+                    <span class="badge bg-secondary"><%= o.get("status") %></span>
+                  </td>
+                  <td class="text-end">
+                    <a
+                      class="btn btn-primary btn-sm"
+                      href="<%= request.getContextPath() %>/pickup/form?id=<%= o.get("order_id") %>"
+                    >
+                      Proses
+                    </a>
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </body>
 </html>

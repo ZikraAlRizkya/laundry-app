@@ -4,107 +4,39 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class OrderDAO {
 
-    // =========================
-    // EXISTING METHODS (AMAN)
-    // =========================
-    public List<Order> listReadyForPickup() throws SQLException {
-        String sql = "SELECT order_id, nota, customer_name, total, status " +
-                     "FROM orders WHERE status='SIAP_DIAMBIL' ORDER BY id DESC";
+    public List<Map<String, Object>> listByStatus(String status) throws SQLException {
 
-        List<Order> list = new ArrayList<>();
+        String sql =
+            "SELECT " +
+            "  o.order_id, " +
+            "  CONCAT(u.first_name, ' ', u.last_name) AS customer, " +
+            "  o.total_price, " +
+            "  o.status " +
+            "FROM orders o " +
+            "JOIN users u ON u.user_id = o.user_id " +
+            "WHERE o.status = ? " +
+            "ORDER BY o.order_id DESC";
 
-        try (Connection c = DBConnection.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        List<Map<String, Object>> list = new ArrayList<>();
 
-            while (rs.next()) {
-                Order o = new Order();
-                o.setId(rs.getInt("id"));
-                o.setNota(rs.getString("nota"));
-                o.setCustomerName(rs.getString("customer_name"));
-                o.setTotal(rs.getInt("total"));
-                o.setStatus(rs.getString("status"));
-                list.add(o);
-            }
-        }
-        return list;
-    }
-
-    public Order findById(int id) throws SQLException {
-        String sql = "SELECT id, nota, customer_name, total, status FROM orders WHERE id=?";
-
-        try (Connection c = DBConnection.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) return null;
-
-                Order o = new Order();
-                o.setId(rs.getInt("id"));
-                o.setNota(rs.getString("nota"));
-                o.setCustomerName(rs.getString("customer_name"));
-                o.setTotal(rs.getInt("total"));
-                o.setStatus(rs.getString("status"));
-                return o;
-            }
-        }
-    }
-
-    public boolean confirmPaymentAndPickup(int orderId, String method, int amountPaid, String receiverName)
-            throws SQLException {
-
-        String sql = "UPDATE orders SET " +
-                     "payment_method=?, amount_paid=?, receiver_name=?, " +
-                     "paid_at=NOW(), picked_up_at=NOW(), status='SELESAI' " +
-                     "WHERE id=? AND status='SIAP_DIAMBIL'";
-
-        try (Connection c = DBConnection.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
-            ps.setString(1, method);
-            ps.setInt(2, amountPaid);
-            ps.setString(3, receiverName);
-            ps.setInt(4, orderId);
-
-            return ps.executeUpdate() > 0;
-        }
-    }
-
-    // =========================
-    // NEW METHODS (UNTUK 4 HALAMAN ADMIN)
-    // =========================
-
-    /**
-     * Ambil daftar order berdasarkan status.
-     * Dipakai untuk:
-     * BARU, DITERIMA, DIPROSES, SIAP_DIAMBIL, dll.
-     */
-    public List<Order> listByStatus(String status) throws SQLException {
-        String sql = "SELECT id, nota, customer_name, total, status " +
-                     "FROM orders WHERE status=? ORDER BY id DESC";
-
-        List<Order> list = new ArrayList<>();
-
-        try (Connection c = DBConnection.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
-
+        try (
+            Connection c = DBConnection.getConnection();
+            PreparedStatement ps = c.prepareStatement(sql)
+        ) {
             ps.setString(1, status);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Order o = new Order();
-                    o.setId(rs.getInt("id"));
-                    o.setNota(rs.getString("nota"));
-                    o.setCustomerName(rs.getString("customer_name"));
-                    o.setTotal(rs.getInt("total"));
-                    o.setStatus(rs.getString("status"));
-                    list.add(o);
+                    Map<String, Object> row = new HashMap<>();
+                    row.put("order_id", rs.getInt("order_id"));
+                    row.put("customer", rs.getString("customer"));
+                    row.put("total_price", rs.getBigDecimal("total_price"));
+                    row.put("status", rs.getString("status"));
+                    list.add(row);
                 }
             }
         }
@@ -112,39 +44,89 @@ public class OrderDAO {
         return list;
     }
 
-    /**
-     * Update status order (dipakai tombol-tombol admin).
-     * Untuk mencegah "loncat" status, kita kunci transisi yang valid:
-     * BARU -> DITERIMA
-     * DITERIMA -> DIPROSES
-     * DIPROSES -> SIAP_DIAMBIL
-     *
-     * Kalau status awal tidak sesuai, update akan gagal (return false).
-     */
-    public boolean updateStatus(int orderId, String newStatus) throws SQLException {
-        String expectedCurrentStatus = null;
+    public Map<String, Object> findById(int orderId) throws SQLException {
 
-        if ("DITERIMA".equalsIgnoreCase(newStatus)) {
-            expectedCurrentStatus = "BARU";
-        } else if ("DIPROSES".equalsIgnoreCase(newStatus)) {
-            expectedCurrentStatus = "DITERIMA";
-        } else if ("SIAP_DIAMBIL".equalsIgnoreCase(newStatus)) {
-            expectedCurrentStatus = "DIPROSES";
-        } else {
-            // Kalau kamu mau support transisi lain, tambahkan aturan di sini.
-            throw new SQLException("Transisi status tidak diizinkan: -> " + newStatus);
+        String sql =
+            "SELECT " +
+            "  o.order_id, " +
+            "  CONCAT(u.first_name, ' ', u.last_name) AS customer, " +
+            "  o.total_price, " +
+            "  o.status " +
+            "FROM orders o " +
+            "JOIN users u ON u.user_id = o.user_id " +
+            "WHERE o.order_id = ? " +
+            "LIMIT 1";
+
+        try (
+            Connection c = DBConnection.getConnection();
+            PreparedStatement ps = c.prepareStatement(sql)
+        ) {
+            ps.setInt(1, orderId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+
+                Map<String, Object> row = new HashMap<>();
+                row.put("order_id", rs.getInt("order_id"));
+                row.put("customer", rs.getString("customer"));
+                row.put("total_price", rs.getBigDecimal("total_price"));
+                row.put("status", rs.getString("status"));
+                return row;
+            }
         }
+    }
 
-        String sql = "UPDATE orders SET status=? WHERE id=? AND status=?";
+    public boolean confirmPickupAndPayment(int orderId, String method) throws SQLException {
 
-        try (Connection c = DBConnection.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+        String updateOrderSql =
+            "UPDATE orders " +
+            "SET status = 'done', pickup_date = NOW() " +
+            "WHERE order_id = ? AND status = 'ready to taken'";
 
-            ps.setString(1, newStatus.toUpperCase());
-            ps.setInt(2, orderId);
-            ps.setString(3, expectedCurrentStatus);
+        String insertPaymentSql =
+            "INSERT INTO payments (order_id, payment_method, payment_status, payment_date) " +
+            "VALUES (?, ?, 'paid', NOW())";
 
-            return ps.executeUpdate() > 0;
+        Connection c = null;
+
+        try {
+            c = DBConnection.getConnection();
+            c.setAutoCommit(false);
+
+            int updated;
+
+            try (PreparedStatement ps = c.prepareStatement(updateOrderSql)) {
+                ps.setInt(1, orderId);
+                updated = ps.executeUpdate();
+            }
+
+            if (updated <= 0) {
+                c.rollback();
+                return false;
+            }
+
+            try (PreparedStatement ps = c.prepareStatement(insertPaymentSql)) {
+                ps.setInt(1, orderId);
+                ps.setString(2, method);
+                ps.executeUpdate();
+            }
+
+            c.commit();
+            return true;
+
+        } catch (SQLException e) {
+            if (c != null) {
+                try { c.rollback(); } catch (SQLException ignore) {}
+            }
+            throw e;
+
+        } finally {
+            if (c != null) {
+                try { c.setAutoCommit(true); } catch (SQLException ignore) {}
+                try { c.close(); } catch (SQLException ignore) {}
+            }
         }
     }
 }

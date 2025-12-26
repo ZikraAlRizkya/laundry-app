@@ -43,7 +43,7 @@
                     Manajemen Layanan
                 </a>
 
-                <a href="${pageContext.request.contextPath}/Zikra/Laporan.jsp" class="<%= currentPage.equals("/Zikra/Laporan.jsp") ? "active" : "" %>">
+                <a href="${pageContext.request.contextPath}/LaporanStatistikController?user_id=${user.id}" class="<%= currentPage.equals("/Zikra/Laporan.jsp") ? "active" : "" %>">
                     <i class="fa-solid fa-file-lines"></i>
                     Laporan & Statistik
                 </a>

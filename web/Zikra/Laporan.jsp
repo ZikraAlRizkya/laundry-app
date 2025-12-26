@@ -43,7 +43,7 @@
                     Manajemen Layanan
                 </a>
 
-                <a href="${pageContext.request.contextPath}/Zikra/Laporan.jsp" class="<%= currentPage.equals("/Zikra/Laporan.jsp") ? "active" : "" %>">
+                <a href="${pageContext.request.contextPath}/LaporanController?user_id=${user.id}" class="<%= currentPage.equals("/Zikra/Laporan.jsp") ? "active" : "" %>">
                     <i class="fa-solid fa-file-lines"></i>
                     Laporan & Statistik
                 </a>
@@ -82,7 +82,134 @@
         <div class="content" style="position: relative; padding-bottom: 80px;">
             <h1 style="color: white; margin-bottom:50px">Laporan & Statistik</h1>
             
-            
+            <div class="container">
+                <div class="row" style="margin-bottom:50px">
+                    <div class="col-6 d-flex justify-content-start">
+                        
+                        <div style="width: 27rem;">
+                           
+                                <div class="card card-stats mb-4 mb-lg-0 shadow">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Total Pelanggan</h5>
+                                                <span class="h2 font-weight-bold mb-0">${userDetail.totalPelanggan}</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="bg-danger text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
+                                                    <i class="fa-solid fa-star"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </div>
+                                </div>
+                        </div> 
+                    </div>
+                    <div class="col-6 d-flex justify-content-start">
+                        <div style="width: 27rem;">
+                            <a href="${pageContext.request.contextPath}/Aril/PesananDiterimaAdmin.jsp" style="text-decoration: none; color: inherit;">
+                                <div class="card card-stats mb-4 mb-lg-0 shadow">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Total Pendapatan</h5>
+                                                <span id="txtPendapatan" class="h2 font-weight-bold mb-0"></span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="bg-warning text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
+                                                    <i class="fa-solid fa-basket-shopping"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>                           
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-bottom:50px">
+                    <div class="col-6 d-flex justify-content-start">
+                        
+                        <div style="width: 27rem;">
+                            <a href="${pageContext.request.contextPath}/Aril/PesananDiprosesAdmin.jsp" style="text-decoration: none; color: inherit;">
+                                <div class="card card-stats mb-4 mb-lg-0 shadow">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Total Pesanan</h5>
+                                                <span class="h2 font-weight-bold mb-0">${userDetail.totalPesanan}</span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="bg-primary text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
+                                                    <i class="fa-solid fa-shirt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>                                                     
+                        </div>
+                    </div>
+                    <div class="col-6 d-flex justify-content-start">
+                        <div style="width: 27rem;">
+                            <a href="${pageContext.request.contextPath}/Aril/PesananSiapDiambilAdmin.jsp" style="text-decoration: none; color: inherit;">
+                                <div class="card card-stats mb-4 mb-lg-0 shadow">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5 class="card-title text-uppercase text-muted mb-0">Rata Rata Pendapatan</h5>
+                                                <span id="txtRatarata" class="h2 font-weight-bold mb-0"></span>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="bg-success text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="mt-3 mb-0 text-muted text-sm">
+                                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                            <span class="text-nowrap">Since last month</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
+    <script>
+    // Pastikan angka ini tidak mengandung karakter non-angka
+    let rawData = ${userDetail.totalPendapatan}; 
+    let rawData2 = ${userDetail.rataRataPendapatanPerHari};
+    
+    // Format ke Rupiah menggunakan JavaScript murni
+    document.getElementById('txtPendapatan').innerText = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+    }).format(rawData);
+    
+    document.getElementById('txtRatarata').innerText = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(rawData2);
+</script>
 </html>

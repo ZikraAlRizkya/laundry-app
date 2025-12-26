@@ -1,44 +1,26 @@
 package Aril.Controller;
 
-import Aril.Model.Order;
 import Aril.Model.OrderDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-@WebServlet(name = "PickupServlet", urlPatterns = {"/pickup", "/pickup/*", "/_pickup"})
+@WebServlet(name = "PickupServlet", urlPatterns = {"/pickup", "/pickup/*"})
 public class PickupServlet extends HttpServlet {
 
     private final OrderDAO orderDAO = new OrderDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
 
-        // ==== kalau masih ada yang akses URL lama: /_pickup?action=list ====
-        String action = request.getParameter("action");
-        if (action != null && !action.isBlank()) {
-            String ctx = request.getContextPath();
-            if ("list".equalsIgnoreCase(action)) {
-                response.sendRedirect(ctx + "/pickup/list");
-                return;
-            }
-            if ("form".equalsIgnoreCase(action)) {
-                String id = request.getParameter("id");
-                response.sendRedirect(ctx + "/pickup/form?id=" + (id == null ? "" : id));
-                return;
-            }
-        }
+        String pathInfo = request.getPathInfo();
 
-        // ==== URL rapi (REST-ish): /pickup/list, /pickup/form?id= ====
-        String pathInfo = request.getPathInfo(); // "/list", "/form"
-        String servletPath = request.getServletPath(); // "/pickup" atau "/_pickup"
-
-        // kalau akses /pickup (tanpa /list) -> redirect ke /pickup/list
         if (pathInfo == null || "/".equals(pathInfo)) {
             response.sendRedirect(request.getContextPath() + "/pickup/list");
             return;
@@ -46,23 +28,30 @@ public class PickupServlet extends HttpServlet {
 
         try {
             if ("/list".equals(pathInfo)) {
-                List<Order> orders = orderDAO.listReadyForPickup();
+
+                List<Map<String, Object>> orders =
+                    orderDAO.listByStatus("ready to taken");
+
                 request.setAttribute("orders", orders);
                 request.getRequestDispatcher("/pickup_list.jsp").forward(request, response);
                 return;
             }
 
             if ("/form".equals(pathInfo)) {
+
                 String idStr = request.getParameter("id");
-                if (idStr == null) {
+
+                if (idStr == null || idStr.isBlank()) {
                     response.sendError(400, "Missing id");
                     return;
                 }
-                int id = Integer.parseInt(idStr);
 
-                Order order = orderDAO.findById(id);
+                int orderId = Integer.parseInt(idStr);
+
+                Map<String, Object> order = orderDAO.findById(orderId);
+
                 if (order == null) {
-                    response.sendError(404, "Order not found in DB");
+                    response.sendError(404, "Order not found");
                     return;
                 }
 
@@ -71,7 +60,7 @@ public class PickupServlet extends HttpServlet {
                 return;
             }
 
-            response.sendError(404, "Not found: " + servletPath + pathInfo);
+            response.sendError(404, "Not found");
 
         } catch (SQLException e) {
             throw new ServletException("DB error: " + e.getMessage(), e);
@@ -80,10 +69,16 @@ public class PickupServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
 
-        String pathInfo = request.getPathInfo(); // "/confirm"
-        if (pathInfo == null) pathInfo = "";
+        request.setCharacterEncoding("UTF-8");
+
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo == null) {
+            response.sendError(404, "Not found");
+            return;
+        }
 
         if (!"/confirm".equals(pathInfo)) {
             response.sendError(404, "Not found");
@@ -91,39 +86,48 @@ public class PickupServlet extends HttpServlet {
         }
 
         try {
-            int orderId = Integer.parseInt(request.getParameter("orderId"));
-            String method = request.getParameter("paymentMethod");
-            int amountPaid = Integer.parseInt(request.getParameter("amountPaid"));
-            String receiverName = request.getParameter("receiverName");
+            String orderIdStr = request.getParameter("orderId");
 
-            Order order = orderDAO.findById(orderId);
+            if (orderIdStr == null || orderIdStr.isBlank()) {
+                response.sendError(400, "Missing orderId");
+                return;
+            }
+
+            int orderId = Integer.parseInt(orderIdStr);
+
+            String method = request.getParameter("paymentMethod");
+
+            if (method == null || method.isBlank()) {
+                method = "cash";
+            }
+
+            Map<String, Object> order = orderDAO.findById(orderId);
+
             if (order == null) {
                 response.sendError(404, "Order not found");
                 return;
             }
 
-            if (amountPaid < order.getTotal()) {
-                request.setAttribute("error", "Uang kurang. Minimal bayar: " + order.getTotal());
+            String status = String.valueOf(order.get("status"));
+
+            if (!"ready to taken".equalsIgnoreCase(status)) {
+                request.setAttribute("error", "Status order bukan 'ready to taken'.");
                 request.setAttribute("order", order);
                 request.getRequestDispatcher("/pickup_form.jsp").forward(request, response);
                 return;
             }
 
-            boolean ok = orderDAO.confirmPaymentAndPickup(orderId, method, amountPaid, receiverName);
+            boolean ok = orderDAO.confirmPickupAndPayment(orderId, method);
+
             if (!ok) {
-                response.sendError(409, "Order gagal diproses (status bukan SIAP_DIAMBIL atau sudah berubah).");
+                response.sendError(409, "Gagal confirm. Status sudah berubah / order tidak valid.");
                 return;
             }
 
-            int change = amountPaid - order.getTotal();
-            request.setAttribute("nota", order.getNota());
-            request.setAttribute("customer", order.getCustomerName());
-            request.setAttribute("status", "SELESAI");
-            request.setAttribute("total", order.getTotal());
-            request.setAttribute("paid", amountPaid);
-            request.setAttribute("change", change);
-            request.setAttribute("method", method);
-            request.setAttribute("receiver", receiverName);
+            Map<String, Object> doneOrder = orderDAO.findById(orderId);
+
+            request.setAttribute("order", doneOrder);
+            request.setAttribute("paymentMethod", method);
 
             request.getRequestDispatcher("/receipt.jsp").forward(request, response);
 
