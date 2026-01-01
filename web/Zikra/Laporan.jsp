@@ -79,7 +79,7 @@
 
             <div class="row">
                 <div class="col-md-3">
-                    <div class="card custom-card bg-teal shadow">
+                    <div class="card custom-card shadow" style="background: linear-gradient(135deg, #2563eb 0%, #7196ff 100%); border: none; color: #fff; border-radius: 15px;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between"><h6>TOTAL PELANGGAN</h6></div>
                             <h2 class="mb-0">${userDetail.totalPelanggan}</h2>
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card custom-card bg-white shadow">
+                    <div class="card custom-card shadow" style="background: linear-gradient(135deg, #2563eb 0%, #7196ff 100%); border: none; color: #fff; border-radius: 15px;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between"><h6>TOTAL PESANAN</h6></div>
                             <h2 class="mb-0">${userDetail.totalPesanan}</h2>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="col-md-3">
 
-                    <div class="card custom-card bg-teal shadow">
+                    <div class="card custom-card shadow" style="background: linear-gradient(135deg, #2563eb 0%, #7196ff 100%); border: none; color: #fff; border-radius: 15px;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between"><h6>TOTAL PENDAPATAN</h6></div>
                             <h5 class="mb-0"><span id="txtPendapatan"></span></h5>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="col-md-3">
 
-                    <div class="card custom-card bg-teal shadow">
+                    <div class="card custom-card shadow" style="background: linear-gradient(135deg, #2563eb 0%, #7196ff 100%); border: none; color: #fff; border-radius: 15px;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between"><h6>RATA RATA</h6></div>
                             <h5 class="mb-0"><span id="txtRatarata"></span></h5>

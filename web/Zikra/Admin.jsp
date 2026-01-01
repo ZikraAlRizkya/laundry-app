@@ -67,7 +67,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <a href="${pageContext.request.contextPath}/Aril/PesananBaruAdmin.jsp" style="text-decoration: none; color: inherit;">
-                        <div class="card custom-card bg-teal shadow">
+                        <div class="card custom-card shadow" style="background: linear-gradient(135deg, #1e293b 0%, #475569 100%); border: none; color: #fff; border-radius: 15px;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between"><h6>TOTAL PESANAN BARU</h6></div>
                                 <h1 class="display-4">${userDetail.totalPesananBaruAdmin}</h1>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="col-md-6">
                     <a href="${pageContext.request.contextPath}/Aril/PesananDiterimaAdmin.jsp" style="text-decoration: none; color: inherit;">
-                        <div class="card custom-card bg-white shadow">
+                        <div class="card custom-card shadow" style="background: linear-gradient(135deg, #1e293b 0%, #475569 100%); border: none; color: #fff; border-radius: 15px;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between"><h6>TOTAL PESANAN DITERIMA</h6></div>
                                 <h1 class="display-4">${userDetail.totalDiterimaAdmin}</h1>
@@ -89,7 +89,7 @@
                 </div>
                 <div class="col-md-6">
                     <a href="${pageContext.request.contextPath}/Aril/PesananDiprosesAdmin.jsp" style="text-decoration: none; color: inherit;">
-                        <div class="card custom-card bg-teal shadow">
+                        <div class="card custom-card shadow" style="background: linear-gradient(135deg, #1e293b 0%, #475569 100%); border: none; color: #fff; border-radius: 15px;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between"><h6>TOTAL PESANAN DIPROSES</h6></div>
                                 <h1 class="display-4">${userDetail.totalDiprosesAdmin}</h1>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-md-6">
                     <a href="${pageContext.request.contextPath}/Aril/PesananSiapDiambilAdmin.jsp" style="text-decoration: none; color: inherit;">
-                        <div class="card custom-card bg-teal shadow">
+                        <div class="card custom-card shadow" style="background: linear-gradient(135deg, #1e293b 0%, #475569 100%); border: none; color: #fff; border-radius: 15px;">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between"><h6>TOTAL PESANAN SIAP DIAMBIL</h6></div>
                                 <h1 class="display-4">${userDetail.totalSiapDiambilAdmin}</h1>

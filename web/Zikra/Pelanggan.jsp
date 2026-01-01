@@ -65,7 +65,7 @@
             </h1>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card custom-card bg-teal shadow">
+                    <div class="card custom-card shadow" style="background: linear-gradient(135deg, #1e293b 0%, #475569 100%); border: none; color: #fff; border-radius: 15px;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between"><h6>POINT LOYALITAS</h6></div>
                             <h1 class="display-4">0</h1>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card custom-card bg-white shadow">
+                    <div class="card custom-card shadow" style="background: linear-gradient(135deg, #1e293b 0%, #475569 100%); border: none; color: #fff; border-radius: 15px;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between"><h6>TOTAL PESANAN</h6></div>
                             <h1 class="display-4">${userDetail.totalPesananUser}</h1>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card custom-card bg-teal shadow">
+                    <div class="card custom-card shadow" style="background: linear-gradient(135deg, #1e293b 0%, #475569 100%); border: none; color: #fff; border-radius: 15px;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between"><h6>PESANAN DALAM PROSES</h6></div>
                             <h1 class="display-4">${userDetail.totalDiprosesUser}</h1>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card custom-card bg-teal shadow">
+                    <div class="card custom-card shadow" style="background: linear-gradient(135deg, #1e293b 0%, #475569 100%); border: none; color: #fff; border-radius: 15px;">
                         <div class="card-body">
                             <div class="d-flex justify-content-between"><h6>TOTAL PESANAN SELESAI</h6></div>
                             <h1 class="display-4">${userDetail.totalSelesaiUser}</h1>

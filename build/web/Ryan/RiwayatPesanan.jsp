@@ -71,7 +71,7 @@
                                         
                                     </tr>
                                     <tr>
-                                        <th scope="row">1</th>
+                                        <td><b>1</b></td>
                                         <td>27-12-2025</td>
                                         <td>27-12-2025</td>
                                         <td>Rp. 50000</td>
@@ -100,7 +100,7 @@
                                         
                                     </tr>
                                     <tr>
-                                        <th scope="row">1</th>
+                                        <td><b>1</b></td>
                                         <td>27-12-2025</td>
                                         <td>27-12-2025</td>
                                         <td>Rp. 50000</td>
@@ -129,7 +129,7 @@
                                         
                                     </tr>
                                     <tr>
-                                        <th scope="row">1</th>
+                                        <td><b>1</b></td>
                                         <td>27-12-2025</td>
                                         <td>27-12-2025</td>
                                         <td>Rp. 50000</td>
@@ -158,7 +158,7 @@
                                         
                                     </tr>
                                     <tr>
-                                        <th scope="row">1</th>
+                                        <td><b>1</b></td>
                                         <td>27-12-2025</td>
                                         <td>27-12-2025</td>
                                         <td>Rp. 50000</td>
