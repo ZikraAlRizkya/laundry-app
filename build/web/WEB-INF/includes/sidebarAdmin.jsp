@@ -45,7 +45,7 @@
                     Manajemen Pelanggan
                 </a>
 
-                <a href="${pageContext.request.contextPath}/Agung/ManajemenLayanan.jsp" class="<%= currentPage.equals("/Agung/ManajemenLayanan.jsp") ? "active" : "" %>">
+                <a href="${pageContext.request.contextPath}/ServletAgung?user_id=${user.id}" class="<%= currentPage.equals("/Agung/ManajemenLayanan.jsp") ? "active" : "" %>">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                     Manajemen Layanan
                 </a>

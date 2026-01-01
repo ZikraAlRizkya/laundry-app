@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Zikra.Model.Edit"%>
 <%@ include file="/WEB-INF/includes/sidebarAdmin.jsp" %>
 <%@ include file="/WEB-INF/includes/navbar.jsp" %>
 <!DOCTYPE html>
@@ -24,7 +25,7 @@
             <h5 style="color: white; margin-bottom:30px">Halo ${userDetail.firstName}!</h5>
             <div class="card">
                 <div class="card-body">
-                    <form action="editProfile" method="post">
+                    <form action="EditProfileAdminController" method="post">
                         <input type="hidden" name="user_id" value="${userDetail.id}">
                         
                     <h4 class="card-title">

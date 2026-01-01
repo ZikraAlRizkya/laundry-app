@@ -16,6 +16,31 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/style.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Pelanggan Page</title>
+        <style>
+    .custom-card {
+        position: relative;
+        overflow: hidden;
+        border: none;
+        min-height: 150px;
+        color: white; /* Default teks putih untuk card berwarna */
+        margin-bottom: 20px;
+    }
+
+    .card-icon-bg {
+        position: absolute;
+        right: -10px;
+        bottom: -20px;
+        font-size: 6rem;
+        opacity: 0.2;
+    }
+    
+    .bg-teal {
+        background-color: #2c8ea1;
+    }
+    .text-teal {
+        color: #2c8ea1 !important;
+    }
+        </style>
     </head>
     <body>
         <!-- KONTEN UTAMA -->
@@ -38,109 +63,42 @@
             <h1 style="color: white; margin-bottom:50px; font-size:28px">
                 <%= greeting %>, ${user.firstName}
             </h1>
-            
-            <div class="container">
-                <div class="row" style="margin-bottom:50px">
-                    <div class="col-6 d-flex justify-content-start">
-                        
-                        <div style="width: 27rem;">
-                            <div class="card card-stats mb-4 mb-lg-0 shadow">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Point Loyalitas</h5>
-                                            <span class="h2 font-weight-bold mb-0">999</span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="bg-danger text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
-                                                <i class="fa-solid fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="mt-3 mb-0 text-muted text-sm">
-                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                        <span class="text-nowrap">Since last month</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="col-6 d-flex justify-content-start">
-                        <div style="width: 27rem;">
-                            <div class="card card-stats mb-4 mb-lg-0 shadow">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Total Pesanan Kamu</h5>
-                                            <span class="h2 font-weight-bold mb-0">${userDetail.totalPesananUser}</span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="bg-warning text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
-                                                <i class="fa-solid fa-basket-shopping"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="mt-3 mb-0 text-muted text-sm">
-                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                        <span class="text-nowrap">Since last month</span>
-                                    </p>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card custom-card bg-teal shadow">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between"><h6>POINT LOYALITAS</h6></div>
+                            <h1 class="display-4">0</h1>
+                            <div class="card-icon-bg"><i class="fa-solid fa-star"></i></i></div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="row" style="margin-bottom:50px">
-                    <div class="col-6 d-flex justify-content-start">
-                        
-                        <div style="width: 27rem;">
-                            <div class="card card-stats mb-4 mb-lg-0 shadow">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Pesanan Dalam Proses</h5>
-                                            <span class="h2 font-weight-bold mb-0">${userDetail.totalDiprosesUser}</span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="bg-primary text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
-                                                <i class="fa-solid fa-shirt"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="mt-3 mb-0 text-muted text-sm">
-                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                        <span class="text-nowrap">Since last month</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="col-6 d-flex justify-content-start">
-                        <div style="width: 27rem;">
-                            <div class="card card-stats mb-4 mb-lg-0 shadow">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col">
-                                            <h5 class="card-title text-uppercase text-muted mb-0">Total Pesanan Selesai</h5>
-                                            <span class="h2 font-weight-bold mb-0">${userDetail.totalSelesaiUser}</span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="bg-success text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 50px; height: 50px">
-                                                <i class="fa-solid fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="mt-3 mb-0 text-muted text-sm">
-                                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                        <span class="text-nowrap">Since last month</span>
-                                    </p>
-                                </div>
-                            </div>
+                <div class="col-md-6">
+                    <div class="card custom-card bg-white shadow">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between"><h6>TOTAL PESANAN</h6></div>
+                            <h1 class="display-4">${userDetail.totalPesananUser}</h1>
+                            <div class="card-icon-bg"><i class="fa-solid fa-box"></i></div>
                         </div>
                     </div>
-                    
+                </div>
+                <div class="col-md-6">
+                    <div class="card custom-card bg-teal shadow">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between"><h6>PESANAN DALAM PROSES</h6></div>
+                            <h1 class="display-4">${userDetail.totalDiprosesUser}</h1>
+                            <div class="card-icon-bg"><i class="fa-solid fa-clock"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card custom-card bg-teal shadow">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between"><h6>TOTAL PESANAN SELESAI</h6></div>
+                            <h1 class="display-4">${userDetail.totalSelesaiUser}</h1>
+                            <div class="card-icon-bg"><i class="fa-solid fa-shirt"></i></i></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-end" style="padding-right: 50px">
@@ -148,6 +106,6 @@
                     PESAN
                 </a>
             </div>
-        </div>
+            </div>
     </body>
 </html>

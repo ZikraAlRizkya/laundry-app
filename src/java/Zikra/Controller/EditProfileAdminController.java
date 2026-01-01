@@ -65,7 +65,7 @@ public class EditProfileAdminController extends HttpServlet {
                         + " birth_date = '" + birthDate + "', phone = '" + phoneNumber + "', email = '" + email + "' where user_id = '" + user_id + "'");
                 db.disconnect();
             }
-            response.sendRedirect("EditProfileController?user_id=" + user_id);
+            response.sendRedirect("EditProfileAdminController?user_id=" + user_id);
         }
     }
 }

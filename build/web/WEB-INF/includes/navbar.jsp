@@ -20,7 +20,7 @@
             <div class="ms-auto d-flex align-items-center" style="margin-right: 5px">
                 <i class="fa-regular fa-bell" style="margin-right: 30px"></i>
                 <span class="navbar-text me-2">
-                    <a class="nav-link d-flex align-items-center gap-2" href="${pageContext.request.contextPath}/EditProfileUserController?user_id=${user.id}">
+                    <a class="nav-link d-flex align-items-center gap-2" href="${pageContext.request.contextPath}/${user.role eq 'user' ? 'EditProfileUserController' : 'EditProfileAdminController'}?user_id=${user.id}">
                         <div class="text-white rounded-circle shadow d-flex justify-content-center align-items-center" style="width: 30px; height: 30px; background-color: #e9ecef; margin-right:10px">
                             <i class="fa-solid fa-user"></i>
                          </div>

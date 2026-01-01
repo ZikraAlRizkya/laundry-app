@@ -1,4 +1,5 @@
 package Zikra.Controller;
+import Zikra.Model.Laporan;
 import Zikra.Model.Edit;
 import Zikra.Controller.DBConnection;
 import java.sql.ResultSet;
@@ -19,17 +20,20 @@ public class LaporanController extends HttpServlet {
             throws ServletException, IOException {
         String user_id = request.getParameter("user_id");
         DBConnection db = new DBConnection();
-        Edit userDetail = new Edit();
+        Laporan userDetail = new Laporan();
+        Edit checkRole = new Edit();
         
         if (db.isConnected) {
             try {
                 // Query sakti untuk menghitung berbagai status sekaligus
-                String sql = "SELECT o.user_id, u.role,"
-                        + "COUNT(CASE WHEN o.status != 'done' THEN 1 END) AS aktif, "
-                        + "COUNT(CASE WHEN o.status = 'process' THEN 1 END) AS proses, "
-                        + "COUNT(CASE WHEN o.status = 'done' THEN 1 END) AS selesai "
-                        + "FROM orders o JOIN users u ON u.user_id = o.user_id WHERE u.user_id = '" + user_id + "'"
-                        + "GROUP BY o.user_id, u.role";
+                String sql = "SELECT u.user_id, u.role, "
+                        + "COALESCE(SUM(CASE WHEN o.status != 'done' THEN 1 ELSE 0 END), 0) AS aktif, "
+                        + "COALESCE(SUM(CASE WHEN o.status = 'process' THEN 1 ELSE 0 END), 0) AS proses, "
+                        + "COALESCE(SUM(CASE WHEN o.status = 'done' THEN 1 ELSE 0 END), 0) AS selesai "
+                        + "FROM users u "
+                        + "LEFT JOIN orders o ON u.user_id = o.user_id "
+                        + "WHERE u.user_id = '" + user_id + "'"
+                        + "GROUP BY u.user_id, u.role";
                 
                 String sql2 = "SELECT "
                         + "COUNT(CASE WHEN status = 'pending' THEN 1 END) AS baru, "
@@ -43,7 +47,7 @@ public class LaporanController extends HttpServlet {
                     userDetail.setTotalPesananUser(rs.getInt("aktif"));
                     userDetail.setTotalDiprosesUser(rs.getInt("proses"));
                     userDetail.setTotalSelesaiUser(rs.getInt("selesai"));
-                    userDetail.setRole(rs.getString("role"));
+                    checkRole.setRole(rs.getString("role"));
                 }
                 rs.close();
                 
@@ -63,7 +67,7 @@ public class LaporanController extends HttpServlet {
             }
         }
         // forward ke JSP profil
-        if("user".equals(userDetail.getRole())){
+        if("user".equals(checkRole.getRole())){
             request.getRequestDispatcher("Zikra/Pelanggan.jsp").forward(request, response);
         }else{
             request.getRequestDispatcher("Zikra/Admin.jsp").forward(request, response);

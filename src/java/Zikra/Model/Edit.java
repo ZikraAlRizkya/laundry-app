@@ -17,110 +17,11 @@ public class Edit {
     private String city;
     private String phoneNumber;
     private Date birthDate;
-    private int totalPesananUser;
-    private int totalDiprosesUser;
-    private int totalSelesaiUser;
-    private int totalPesananBaruAdmin;
-    private int totalDiterimaAdmin;
-    private int totalDiprosesAdmin;
-    private int totalSiapDiambilAdmin;
-    private int totalPelanggan;
-    private int totalPendapatan;
-    private int totalPesanan;
-    private double rataRataPendapatanPerHari;
 
     // ===== Constructor =====
     public Edit() {}
 
     // ===== Getters & Setters =====
-    
-    public int getTotalPelanggan(){
-        return totalPelanggan;
-    }
-    
-    public void setTotalPelanggan(int totalPelanggan){
-        this.totalPelanggan = totalPelanggan;
-    }
-    
-    public int getTotalPendapatan(){
-        return totalPendapatan;
-    }
-    
-    public void setTotalPendapatan(int totalPendapatan){
-        this.totalPendapatan = totalPendapatan;
-    }
-    
-    public int getTotalPesanan(){
-        return totalPesanan;
-    }
-    
-    public void setTotalPesanan(int totalPesanan){
-        this.totalPesanan = totalPesanan;
-    }
-    
-    public double getRataRataPendapatanPerHari(){
-        return rataRataPendapatanPerHari;
-    }
-    
-    public void setRataRataPendapatanPerHari(double rataRataPendapatanPerHari){
-        this.rataRataPendapatanPerHari = rataRataPendapatanPerHari;
-    }
-    
-    public int getTotalPesananUser(){
-        return totalPesananUser;
-    }
-    
-    public void setTotalPesananUser(int totalPesananUser){
-        this.totalPesananUser = totalPesananUser;
-    }
-    
-    public int getTotalDiprosesUser(){
-        return totalDiprosesUser;
-    }
-    
-    public void setTotalDiprosesUser(int totalDiprosesUser){
-        this.totalDiprosesUser = totalDiprosesUser;
-    }
-    
-    public int getTotalSelesaiUser(){
-        return totalSelesaiUser;
-    }
-    
-    public void setTotalSelesaiUser(int totalSelesaiUser){
-        this.totalSelesaiUser = totalSelesaiUser;
-    }
-    
-    public int getTotalPesananBaruAdmin(){
-        return totalPesananBaruAdmin;
-    }
-    
-    public void setTotalPesananBaruAdmin(int totalPesananBaruAdmin){
-        this.totalPesananBaruAdmin = totalPesananBaruAdmin;
-    }
-    
-    public int getTotalDiterimaAdmin(){
-        return totalDiterimaAdmin;
-    }
-    
-    public void setTotalDiterimaAdmin(int totalDiterimaAdmin){
-        this.totalDiterimaAdmin = totalDiterimaAdmin;
-    }
-    
-    public int getTotalDiprosesAdmin(){
-        return totalDiprosesAdmin;
-    }
-    
-    public void setTotalDiprosesAdmin(int totalDiprosesAdmin){
-        this.totalDiprosesAdmin = totalDiprosesAdmin;
-    }
-    
-    public int getTotalSiapDiambilAdmin(){
-        return totalSiapDiambilAdmin;
-    }
-    
-    public void setTotalSiapDiambilAdmin(int totalSiapDiambilAdmin){
-        this.totalSiapDiambilAdmin = totalSiapDiambilAdmin;
-    }
     
     public int getId() {
         return id;

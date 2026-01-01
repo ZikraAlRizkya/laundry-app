@@ -41,10 +41,8 @@
         </style>
     </head>
     <body>
-
         <div class="main-content">
-            <div class="container-fluid"> <h2 class="mb-4">Dashboard Admin Laundry</h2>
-
+            <h1 style="color:white; margin-bottom:40px">Services Management</h1>
                 <% 
                     String msg = (String) request.getAttribute("message");
                     String type = (String) request.getAttribute("messageType");
