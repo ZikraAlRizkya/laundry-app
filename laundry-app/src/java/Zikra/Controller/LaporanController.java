@@ -3,6 +3,7 @@ import Zikra.Model.Laporan;
 import Zikra.Model.Edit;
 import Zikra.Controller.DBConnection;
 import java.sql.ResultSet;
+import Zikra.Util.AppConstant;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,7 +26,6 @@ public class LaporanController extends HttpServlet {
         
         if (db.isConnected) {
             try {
-                // Query sakti untuk menghitung berbagai status sekaligus
                 String sql = "SELECT u.user_id, u.role, "
                         + "COALESCE(SUM(CASE WHEN o.status != 'done' THEN 1 ELSE 0 END), 0) AS aktif, "
                         + "COALESCE(SUM(CASE WHEN o.status = 'process' THEN 1 ELSE 0 END), 0) AS proses, "
@@ -66,8 +66,7 @@ public class LaporanController extends HttpServlet {
                 db.disconnect();
             }
         }
-        // forward ke JSP profil
-        if("user".equals(checkRole.getRole())){
+        if(AppConstant.ROLE_USER.equals(checkRole.getRole())){
             request.getRequestDispatcher("Zikra/Pelanggan.jsp").forward(request, response);
         }else{
             request.getRequestDispatcher("Zikra/Admin.jsp").forward(request, response);

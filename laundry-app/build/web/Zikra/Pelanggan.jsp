@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Pelanggan
-    Created on : Dec 16, 2025, 11:52:26 AM
-    Author     : Muhammad Zikra
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/sidebarUser.jsp" %>
 <%@ include file="/WEB-INF/includes/navbar.jsp" %>
@@ -22,7 +16,7 @@
         overflow: hidden;
         border: none;
         min-height: 150px;
-        color: white; /* Default teks putih untuk card berwarna */
+        color: white;
         margin-bottom: 20px;
     }
 

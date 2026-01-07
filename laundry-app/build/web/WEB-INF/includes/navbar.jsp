@@ -1,9 +1,3 @@
-<%-- 
-    Document   : navbar
-    Created on : Dec 26, 2025, 7:19:41 PM
-    Author     : Muhammad Zikra
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

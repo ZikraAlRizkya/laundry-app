@@ -1,9 +1,3 @@
-<%-- 
-    Document   : ProfilAdmin
-    Created on : Dec 20, 2025, 2:57:28 PM
-    Author     : Muhammad Zikra
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Zikra.Model.Edit"%>
 <%@ include file="/WEB-INF/includes/sidebarAdmin.jsp" %>

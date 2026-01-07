@@ -1,13 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Zikra.Model;
-
 import java.sql.Date;
 
 public class Edit {
-
     private int id;
     private String firstName;
     private String lastName;
@@ -18,10 +12,7 @@ public class Edit {
     private String phoneNumber;
     private Date birthDate;
 
-    // ===== Constructor =====
     public Edit() {}
-
-    // ===== Getters & Setters =====
     
     public int getId() {
         return id;
@@ -59,7 +50,6 @@ public class Edit {
         return password;
     }
 
-    // ⚠️ Only use when needed (never expose in JSP)
     public void setPassword(String password) {
         this.password = password;
     }

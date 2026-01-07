@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Zikra.Model;
 import java.util.ArrayList;
-/**
- *
- * @author Muhammad Zikra
- */
 public class Laporan {
     private int totalPesananUser;
     private int totalDiprosesUser;
@@ -162,4 +154,3 @@ public class Laporan {
         this.totalSiapDiambilAdmin = totalSiapDiambilAdmin;
     }
 }
-

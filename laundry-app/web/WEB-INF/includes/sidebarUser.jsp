@@ -1,9 +1,3 @@
-<%-- 
-    Document   : sidebar
-    Created on : Dec 26, 2025, 7:18:27 PM
-    Author     : Muhammad Zikra
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

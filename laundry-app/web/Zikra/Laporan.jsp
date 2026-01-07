@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Laporan
-    Created on : Dec 20, 2025, 2:59:44 PM
-    Author     : Muhammad Zikra
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/includes/sidebarAdmin.jsp" %>
 <%@include file="/WEB-INF/includes/navbar.jsp" %>
@@ -35,40 +29,40 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             .card .card-title {
-  font-size: 13px;   /* judul kecil */
-  font-weight: 600;
-}
+                font-size: 13px;   
+                font-weight: 600;
+            }
 
-.card .h2 {
-  font-size: 18px;   /* angka utama lebih kecil */
-}
+            .card .h2 {
+                font-size: 18px;
+            }
 
-.card p {
-  font-size: 12px;   /* deskripsi bawah */
-}
-    .custom-card {
-        position: relative;
-        overflow: hidden;
-        border: none;
-        min-height: 150px;
-        color: white; /* Default teks putih untuk card berwarna */
-        margin-bottom: 20px;
-    }
+            .card p {
+                font-size: 12px;
+            }
+            .custom-card {
+                position: relative;
+                overflow: hidden;
+                border: none;
+                min-height: 150px;
+                color: white; 
+                margin-bottom: 20px;
+            }
 
-    .card-icon-bg {
-        position: absolute;
-        right: -10px;
-        bottom: -20px;
-        font-size: 4rem;
-        opacity: 0.2;
-    }
+            .card-icon-bg {
+                position: absolute;
+                right: -10px;
+                bottom: -20px;
+                font-size: 4rem;
+                opacity: 0.2;
+            }
     
-    .bg-teal {
-        background-color: #2c8ea1;
-    }
-    .text-teal {
-        color: #2c8ea1 !important;
-    }
+            .bg-teal {
+                background-color: #2c8ea1;
+            }
+            .text-teal {
+                color: #2c8ea1 !important;
+            }
 
         </style>
     </head>
@@ -134,7 +128,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%                                            while (rs.next()) {
+                                <% while (rs.next()) {
 
                                 %>
                                 <tr>
@@ -180,11 +174,9 @@
     String totalsServices = gson.toJson(userDetail.getTotalOrderService());
     %>
     <script>
-    // Pastikan angka ini tidak mengandung karakter non-angka
     let rawData = ${userDetail.totalPendapatan}; 
     let rawData2 = ${userDetail.rataRataPendapatanPerHari};
     
-    // Format ke Rupiah menggunakan JavaScript murni
     document.getElementById('txtPendapatan').innerText = new Intl.NumberFormat('id-ID', {
         style: 'currency',
         currency: 'IDR',
@@ -200,12 +192,12 @@
     
     const lc = document.getElementById('lineChart').getContext('2d');
     const lineChart = new Chart(lc, {
-        type: 'line', // Bisa diganti 'line', 'pie', 'bar'
+        type: 'line',
         data: {
-            labels: <%= dates %>, // Data dari Java
+            labels: <%= dates %>,
             datasets: [{
                 label: 'Total Pendapatan per Tanggal',
-                data: <%= totalsDates %>, // Data angka dari Java
+                data: <%= totalsDates %>,
                 fill: false,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
@@ -216,12 +208,12 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Total Pendapatan Harian', // judul chart
+                    text: 'Total Pendapatan Harian',
                     font: {
                         size: 18,
                         weight: 'bold'
                     },
-                    color: '#00c8ff' // warna teks judul
+                    color: '#00c8ff'
                 }
             }
         }
@@ -229,12 +221,12 @@
     
     const pc = document.getElementById('pieChart').getContext('2d');
     const pieChart = new Chart(pc, {
-        type: 'pie', // Bisa diganti 'line', 'pie', 'bar'
+        type: 'pie',
         data: {
-            labels: <%= services %>, // Data dari Java
+            labels: <%= services %>,
             datasets: [{
                 label: 'Total Pesanan per Service',
-                data: <%= totalsServices %>, // Data angka dari Java
+                data: <%= totalsServices %>,
                 backgroundColor: ['rgba(255, 99, 132, 0.6)',
                                 'rgba(54, 162, 235, 0.6)'],
                 borderColor: ['rgba(255, 99, 132, 1)',
@@ -246,12 +238,12 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Total Pesanan per Service', // judul chart
+                    text: 'Total Pesanan per Service',
                     font: {
                         size: 18,
                         weight: 'bold'
                     },
-                    color: '#00c8ff' // warna teks judul
+                    color: '#00c8ff'
                 }
             }
         }
@@ -259,12 +251,12 @@
     
     const bc = document.getElementById('barChart').getContext('2d');
     const barChart = new Chart(bc, {
-        type: 'bar', // Bisa diganti 'line', 'pie', 'bar'
+        type: 'bar',
         data: {
-            labels: <%= cities %>, // Data dari Java
+            labels: <%= cities %>,
             datasets: [{
                 label: 'Total Pesanan per Kota',
-                data: <%= totalsCities %>, // Data angka dari Java
+                data: <%= totalsCities %>,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
@@ -274,12 +266,12 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Total Pesanan per Kota', // judul chart
+                    text: 'Total Pesanan per Kota',
                     font: {
                         size: 18,
                         weight: 'bold'
                     },
-                    color: '#00c8ff' // warna teks judul
+                    color: '#00c8ff'
                 }
             }
         }
