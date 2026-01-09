@@ -2,6 +2,10 @@ package Fauzan.Model;
 
 import java.sql.Date;
 
+//Inheritance dari abstract user
+//Encapsulation dari protected dan private variabel dengan method public untuk fetch data
+//Abstract harus di implementasi lalu User dipakai sebagai model utama
+
 public class User extends AbstractUser {
     public User() {
         super();
@@ -22,9 +26,20 @@ public class User extends AbstractUser {
         return email;
     }
     
+    //Exception untuk validasi email untuk contoh
+    //karena NOT NULL jadi di set invalid@example.com jika salah
+    
     @Override
     public void setEmail(String email) {
-        this.email = email;
+        try {
+            if (email == null || !email.contains("@")) {
+                throw new IllegalArgumentException("Invalid email format");
+            }
+            this.email = email;
+        } catch (IllegalArgumentException e) {
+            System.err.println("Error: " + e.getMessage());
+            this.email = "invalid@example.com";
+        }
     }
     
     @Override
@@ -97,6 +112,8 @@ public class User extends AbstractUser {
         profile.setBirthDate(birthDate);
     }
 
+    //Polymorphism jika butuh input yang langsung set dua variabel
+    
     public void setFirstName(String firstName, String lastName) {
         profile.setFirstName(firstName);
         profile.setLastName(lastName);

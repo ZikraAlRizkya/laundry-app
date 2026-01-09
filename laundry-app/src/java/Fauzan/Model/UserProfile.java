@@ -2,6 +2,10 @@ package Fauzan.Model;
 
 import java.sql.Date;
 
+//data pribadi menggunakan private
+//Composition Relations dari User HAS-A UserProfile dan User inisiasi nya di AbstractUser.java
+//Composition karena UserProfile ikut terhapus jika User terhapus
+
 public class UserProfile {
     private String firstName;
     private String lastName;

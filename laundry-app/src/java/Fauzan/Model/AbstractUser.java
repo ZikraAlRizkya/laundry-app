@@ -2,6 +2,10 @@ package Fauzan.Model;
 
 import java.sql.Date;
 
+//abstract class
+//fungsi kosong hanya untuk overview
+//variabel protected karena User.java harus akses (subclass)
+
 public abstract class AbstractUser implements Identifiable {
     protected int id;
     protected String email;
