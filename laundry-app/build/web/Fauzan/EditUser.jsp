@@ -9,6 +9,7 @@
     }
 
     User currentUser = (User) session.getAttribute("user");
+    //deklarasi isEditingSelf agar tidak bisa edit role sendiri
     boolean isEditingSelf =
             currentUser != null && currentUser.getId() == userToEdit.getId();
 %>
