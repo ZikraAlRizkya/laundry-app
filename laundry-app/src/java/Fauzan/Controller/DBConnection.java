@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+//Sesuai modul praktikum tidak diubah-ubah
+//JDBC menggunakan DBConnection dan bisa dipakai oleh anggota lain
+
 public class DBConnection {
 
     private static final String URL = "jdbc:mysql://localhost:3306/laundry_db";
