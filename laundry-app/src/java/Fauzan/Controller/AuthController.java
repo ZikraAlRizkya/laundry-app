@@ -3,7 +3,6 @@ package Fauzan.Controller;
 import Fauzan.Model.User;
 import java.io.IOException;
 import java.sql.*;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -11,42 +10,35 @@ import javax.servlet.http.*;
 @WebServlet(urlPatterns = {
     "/login",
     "/register",
-    "/auth"
+    "/auth",
+    "/editUser"
 })
 public class AuthController extends HttpServlet {
 
-    // =====================================================
-    // GET : PAGE NAVIGATION
-    // =====================================================
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws IOException, ServletException {
 
         String path = request.getServletPath();
 
         switch (path) {
             case "/login":
-                response.sendRedirect(
-                    request.getContextPath() + "/Fauzan/Login.jsp"
-                );
+                response.sendRedirect(request.getContextPath() + "/Fauzan/Login.jsp");
                 break;
 
             case "/register":
-                response.sendRedirect(
-                    request.getContextPath() + "/Fauzan/Register.jsp"
-                );
+                response.sendRedirect(request.getContextPath() + "/Fauzan/Register.jsp");
+                break;
+
+            case "/editUser":
+                handleEditUserGet(request, response);
                 break;
 
             default:
-                response.sendRedirect(
-                    request.getContextPath() + "/index.jsp"
-                );
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
         }
     }
 
-    // =====================================================
-    // POST : FORM ACTIONS
-    // =====================================================
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,14 +47,11 @@ public class AuthController extends HttpServlet {
 
         try {
             if (action == null) {
-                response.sendRedirect(
-                    request.getContextPath() + "/index.jsp"
-                );
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
                 return;
             }
 
             switch (action) {
-
                 case "login":
                     processLogin(request, response);
                     break;
@@ -88,9 +77,7 @@ public class AuthController extends HttpServlet {
                     break;
 
                 default:
-                    response.sendRedirect(
-                        request.getContextPath() + "/index.jsp"
-                    );
+                    response.sendRedirect(request.getContextPath() + "/index.jsp");
             }
 
         } catch (Exception e) {
@@ -98,18 +85,16 @@ public class AuthController extends HttpServlet {
         }
     }
 
-    // =====================================================
-    // LOGIN
-    // =====================================================
     private void processLogin(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        String email    = request.getParameter("email");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         Connection con = DBConnection.getConnection();
         PreparedStatement ps = con.prepareStatement(
-            "SELECT user_id, email, role, password, first_name, last_name FROM users WHERE email=? AND password=?"
+            "SELECT user_id, email, role, first_name, last_name " +
+            "FROM users WHERE email=? AND password=?"
         );
 
         ps.setString(1, email);
@@ -124,13 +109,14 @@ public class AuthController extends HttpServlet {
             user.setEmail(rs.getString("email"));
             user.setRole(rs.getString("role"));
             user.setFirstName(rs.getString("first_name"));
+            user.setLastName(rs.getString("last_name"));
 
             HttpSession session = request.getSession(true);
             session.setAttribute("user", user);
 
-            if ("admin".equals(user.getRole())) {
+            if ("admin".equalsIgnoreCase(user.getRole())) {
                 response.sendRedirect(
-                    request.getContextPath() + "/LaporanController?user_id=" + user.getId()
+                    request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp"
                 );
             } else {
                 response.sendRedirect(
@@ -143,11 +129,12 @@ public class AuthController extends HttpServlet {
                 request.getContextPath() + "/Fauzan/Login.jsp?error=1"
             );
         }
+
+        rs.close();
+        ps.close();
+        con.close();
     }
 
-    // =====================================================
-    // REGISTER
-    // =====================================================
     private void processRegister(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -158,14 +145,11 @@ public class AuthController extends HttpServlet {
         String role      = request.getParameter("role");
         String phone     = request.getParameter("phone");
 
-        Date birthDate = null;
-        String city    = null;
-
         Connection con = DBConnection.getConnection();
         PreparedStatement ps = con.prepareStatement(
             "INSERT INTO users " +
-            "(first_name, last_name, email, password, role, city, phone, birth_date) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            "(first_name, last_name, email, password, role, phone) " +
+            "VALUES (?, ?, ?, ?, ?, ?)"
         );
 
         ps.setString(1, firstName);
@@ -173,20 +157,18 @@ public class AuthController extends HttpServlet {
         ps.setString(3, email);
         ps.setString(4, password);
         ps.setString(5, role);
-        ps.setString(6, city);
-        ps.setString(7, phone);
-        ps.setDate(8, birthDate);
+        ps.setString(6, phone);
 
         ps.executeUpdate();
+
+        ps.close();
+        con.close();
 
         response.sendRedirect(
             request.getContextPath() + "/Fauzan/Login.jsp?registered=1"
         );
     }
 
-    // =====================================================
-    // ADD USER
-    // =====================================================
     private void addUser(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -196,9 +178,7 @@ public class AuthController extends HttpServlet {
 
         Connection con = DBConnection.getConnection();
         PreparedStatement ps = con.prepareStatement(
-            "INSERT INTO users " +
-            "(email, password, role, first_name, last_name, city, phone, birth_date) " +
-            "VALUES (?, ?, ?, NULL, NULL, NULL, NULL, NULL)"
+            "INSERT INTO users (email, password, role) VALUES (?, ?, ?)"
         );
 
         ps.setString(1, email);
@@ -207,40 +187,102 @@ public class AuthController extends HttpServlet {
 
         ps.executeUpdate();
 
+        ps.close();
+        con.close();
+
         response.sendRedirect(
-            request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp"
+            request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp?added=1"
         );
     }
 
-    // =====================================================
-    // UPDATE USER
-    // =====================================================
+    private void handleEditUserGet(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("user") == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        User admin = (User) session.getAttribute("user");
+        if (!"admin".equalsIgnoreCase(admin.getRole())) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        String idParam = request.getParameter("id");
+        if (idParam == null) {
+            response.sendRedirect(request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp");
+            return;
+        }
+
+        try {
+            int userId = Integer.parseInt(idParam);
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT user_id, email, password, role, first_name, last_name, phone " +
+                "FROM users WHERE user_id=?"
+            );
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                User userToEdit = new User();
+                userToEdit.setId(rs.getInt("user_id"));
+                userToEdit.setEmail(rs.getString("email"));
+                userToEdit.setPassword(rs.getString("password"));
+                userToEdit.setRole(rs.getString("role"));
+                userToEdit.setFirstName(rs.getString("first_name"));
+                userToEdit.setLastName(rs.getString("last_name"));
+                userToEdit.setPhoneNumber(rs.getString("phone"));
+
+                request.setAttribute("userToEdit", userToEdit);
+                request.getRequestDispatcher("/Fauzan/EditUser.jsp").forward(request, response);
+            } else {
+                response.sendRedirect(request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp");
+            }
+
+            rs.close();
+            ps.close();
+            con.close();
+
+        } catch (Exception e) {
+            throw new ServletException(e);
+        }
+    }
+
     private void updateUser(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        int id          = Integer.parseInt(request.getParameter("id"));
-        String email    = request.getParameter("email");
+        int id = Integer.parseInt(request.getParameter("id"));
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String phone = request.getParameter("phone");
 
         Connection con = DBConnection.getConnection();
         PreparedStatement ps = con.prepareStatement(
-            "UPDATE users SET email=?, password=? WHERE id=?"
+            "UPDATE users SET email=?, password=?, first_name=?, last_name=?, phone=? WHERE user_id=?"
         );
 
         ps.setString(1, email);
         ps.setString(2, password);
-        ps.setInt(3, id);
+        ps.setString(3, firstName);
+        ps.setString(4, lastName);
+        ps.setString(5, phone);
+        ps.setInt(6, id);
 
         ps.executeUpdate();
 
+        ps.close();
+        con.close();
+
         response.sendRedirect(
-            request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp"
+            request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp?updated=1"
         );
     }
 
-    // =====================================================
-    // DELETE USER
-    // =====================================================
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
@@ -254,14 +296,14 @@ public class AuthController extends HttpServlet {
         ps.setInt(1, id);
         ps.executeUpdate();
 
+        ps.close();
+        con.close();
+
         response.sendRedirect(
-            request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp"
+            request.getContextPath() + "/Fauzan/ManajemenPelanggan.jsp?deleted=1"
         );
     }
 
-    // =====================================================
-    // LOGOUT
-    // =====================================================
     private void logout(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
@@ -270,8 +312,6 @@ public class AuthController extends HttpServlet {
             session.invalidate();
         }
 
-        response.sendRedirect(
-            request.getContextPath() + "/index.jsp"
-        );
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
 }
