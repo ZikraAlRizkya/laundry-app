@@ -44,6 +44,7 @@
                             <option value="">-- Pilih Layanan --</option>
                             <option value="Regular">Regular</option>
                             <option value="Ekspres">Ekspres</option>
+                            <option value="Setrika">Setrika</option>
                         </select>
                     </div>
 

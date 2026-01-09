@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Register Page</title>
 
-    <!-- Bootstrap & Icons -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -78,8 +77,7 @@
             Create your account
         </p>
 
-        <form action="<%= request.getContextPath() %>/auth" method="post">
-            <input type="hidden" name="action" value="register">
+        <form action="<%= request.getContextPath() %>/AuthController/register" method="post">
 
             <div class="row mb-3">
                 <div class="col">
@@ -160,7 +158,7 @@
 
         <div class="text-center mt-3">
             <a
-                href="<%= request.getContextPath() %>/Fauzan/Login.jsp"
+                href="<%= request.getContextPath() %>/AuthController/login"
                 class="fw-bold"
             >
                 Back to Login

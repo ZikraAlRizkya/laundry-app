@@ -29,8 +29,7 @@ public class LaporanStatistikController extends HttpServlet {
                         + "COUNT(DISTINCT user_id) AS total_user, "
                         + "SUM(total_price) AS total_pendapatan, "
                         + "COUNT(order_id) AS total_order "
-                        + "FROM orders "
-                        + "where status != 'pending'";
+                        + "FROM orders ";
                 
                 ResultSet rsCard1 = db.getData(sqlCard1);
                 if (rsCard1.next()) {
@@ -44,7 +43,6 @@ public class LaporanStatistikController extends HttpServlet {
                         + "FROM ( "
                         + "SELECT order_date, SUM(total_price) AS total_harian "
                         + "FROM orders "
-                        + "WHERE status != 'pending' "
                         + "GROUP BY order_date "
                         + ") AS harian";
 

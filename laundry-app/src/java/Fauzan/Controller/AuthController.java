@@ -224,7 +224,7 @@ public class AuthController extends HttpServlet {
 
                 if ("admin".equalsIgnoreCase(user.getRole())) {
                     response.sendRedirect(
-                        request.getContextPath() + "/AuthController/admin/users"
+                        request.getContextPath() + "/AuthController/laporan?user_id=" + user.getId()
                     );
                 } else {
                     response.sendRedirect(

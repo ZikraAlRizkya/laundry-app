@@ -11,9 +11,14 @@
     <body>
         <%
             String currentPage = request.getServletPath();
+            String pathInfo = request.getPathInfo();
+            String fullPath = currentPage;
+            
+            if (pathInfo != null) {
+                fullPath = currentPage + pathInfo;
+            }
         %>
         <div class="sidebar">
-
             <!-- Header -->
             <div class="sidebar-header">
                 <h4>
@@ -21,7 +26,6 @@
                     WashUp
                 </h4>
             </div>
-
             <!-- Menu -->
             <div class="sidebar-menu">
                 <a href="${pageContext.request.contextPath}/LaporanController?user_id=${user.id}" class="<%= currentPage.equals("/Zikra/Admin.jsp") ? "active" : "" %>">
@@ -33,29 +37,29 @@
                     <i class="fa-solid fa-user"></i>
                     Profil
                 </a>
-
-                <a href="${pageContext.request.contextPath}/Fauzan/ManajemenPelanggan.jsp" class="<%= currentPage.equals("/Fauzan/ManajemenPelanggan.jsp") ? "active" : "" %>">
+                <a href="${pageContext.request.contextPath}/AuthController/admin/users" class="<%= (fullPath.contains("/admin/users") || currentPage.equals("/Fauzan/ManajemenPelanggan.jsp")) ? "active" : "" %>">
                     <i class="fa-solid fa-basket-shopping"></i>
                     Manajemen Pelanggan
                 </a>
-
                 <a href="${pageContext.request.contextPath}/ServletAgung?user_id=${user.id}" class="<%= currentPage.equals("/Agung/ManajemenLayanan.jsp") ? "active" : "" %>">
                     <i class="fa-solid fa-clock-rotate-left"></i>
                     Manajemen Layanan
                 </a>
-
                 <a href="${pageContext.request.contextPath}/LaporanStatistikController?user_id=${user.id}" class="<%= currentPage.equals("/Zikra/Laporan.jsp") ? "active" : "" %>">
                     <i class="fa-solid fa-file-lines"></i>
                     Laporan & Statistik
                 </a>
             </div>
-
             <!-- Footer -->
             <div class="sidebar-footer">
-                <a href="${pageContext.request.contextPath}/index.jsp">
+                <a href="${pageContext.request.contextPath}/AuthController/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     Logout
                 </a>
+                
+                <!-- Hidden logout form -->
+                <form id="logout-form" action="${pageContext.request.contextPath}/AuthController/logout" method="post" style="display: none;">
+                </form>
             </div>
         </div>
     </body>

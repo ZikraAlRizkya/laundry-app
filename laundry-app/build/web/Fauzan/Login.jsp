@@ -92,8 +92,7 @@
             </div>
         <% } %>
 
-        <form action="${pageContext.request.contextPath}/auth" method="post">
-            <input type="hidden" name="action" value="login">
+        <form action="${pageContext.request.contextPath}/AuthController/login" method="post">
 
             <div class="mb-3">
                 <label class="form-label">Email</label>
@@ -132,7 +131,7 @@
         <div class="text-center mt-3">
             <span class="text-muted">Don't have an account?</span><br>
             <a
-                href="${pageContext.request.contextPath}/Fauzan/Register.jsp"
+                href="${pageContext.request.contextPath}/AuthController/register"
                 class="fw-bold"
             >
                 Create account
