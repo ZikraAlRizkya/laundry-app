@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="id">
+    
+    <!-- UI thanks to Zikra -->
 <head>
     <meta charset="UTF-8">
     <title>Laundry Login</title>
@@ -92,14 +94,21 @@
             </div>
         <% } %>
 
+        <!-- doPost dipanggil dan mengirim data email -->
+        <!-- input yang dikirim tipe email sesuai input type HTML  -->
+        <!-- method GET outputnya key=value&key=value contohnya ketika edit user id -->
         <form action="${pageContext.request.contextPath}/AuthController/login" method="post">
 
             <div class="mb-3">
                 <label class="form-label">Email</label>
                 <input
+                    
                     type="email"
+                    
                     class="form-control"
+                    
                     name="email"
+                    
                     placeholder="example@gmail.com"
                     required
                 >
@@ -129,12 +138,12 @@
         </form>
 
         <div class="text-center mt-3">
-            <span class="text-muted">Don't have an account?</span><br>
+            <span class="text-muted">Tidak punya akun?</span><br>
             <a
                 href="${pageContext.request.contextPath}/AuthController/register"
                 class="fw-bold"
             >
-                Create account
+                Buat akun klik disini
             </a>
         </div>
 
