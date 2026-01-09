@@ -43,6 +43,7 @@ public class UserDAOImpl implements UserDAO {
                     + "first_name = '" + user.getFirstName() + "', "
                     + "last_name = '" + user.getLastName() + "', "
                     + "city = '" + user.getCity() + "', "
+                    + "birth_date = '" + user.getBirthDate() + "', "
                     + "email = '" + user.getEmail() + "' "
                     + "WHERE user_id = '" + user.getId() + "'";
             db.runQuery(sql);
