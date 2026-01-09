@@ -1,44 +1,14 @@
 package Fauzan.Model;
 
-import java.sql.Date;
+public class User extends BaseEntity {
 
-public class User {
-
-    private int id;
-    private String firstName;
-    private String lastName;
     private String email;
     private String password;
     private String role;
-    private String city;
-    private String phoneNumber;
-    private Date birthDate;
+    private UserProfile profile;
 
-    public User() {}
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public User() {
+        this.profile = new UserProfile();
     }
 
     public String getEmail() {
@@ -52,40 +22,56 @@ public class User {
     public String getPassword() {
         return password;
     }
-
+ 
     public void setPassword(String password) {
         this.password = password;
     }
-
+ 
     public String getRole() {
         return role;
     }
-
+ 
     public void setRole(String role) {
         this.role = role;
     }
 
+    public String getFirstName() {
+        return profile.getFirstName();
+    }
+
+    public void setFirstName(String firstName) {
+        profile.setFirstName(firstName);
+    }
+
+    public String getLastName() {
+        return profile.getLastName();
+    }
+
+    public void setLastName(String lastName) {
+        profile.setLastName(lastName);
+    }
+
     public String getCity() {
-        return city;
+        return profile.getCity();
     }
 
     public void setCity(String city) {
-        this.city = city;
+        profile.setCity(city);
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return profile.getPhoneNumber();
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        profile.setPhoneNumber(phoneNumber);
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public java.sql.Date getBirthDate() {
+        return profile.getBirthDate();
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthDate(java.sql.Date birthDate) {
+        profile.setBirthDate(birthDate);
     }
 }
