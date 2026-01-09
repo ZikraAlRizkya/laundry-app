@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Laundry Login</title>
 
-    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
@@ -93,8 +92,7 @@
             </div>
         <% } %>
 
-        <form action="${pageContext.request.contextPath}/auth" method="post">
-            <input type="hidden" name="action" value="login">
+        <form action="${pageContext.request.contextPath}/AuthController/login" method="post">
 
             <div class="mb-3">
                 <label class="form-label">Email</label>
@@ -133,7 +131,7 @@
         <div class="text-center mt-3">
             <span class="text-muted">Don't have an account?</span><br>
             <a
-                href="${pageContext.request.contextPath}/Fauzan/Register.jsp"
+                href="${pageContext.request.contextPath}/AuthController/register"
                 class="fw-bold"
             >
                 Create account
