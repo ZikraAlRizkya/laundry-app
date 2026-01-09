@@ -7,6 +7,10 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
+//Encapsulationhandling URL dengan awalan AuthController
+//CRUD juga menggunakan AuthController agar bisa satu file
+//Polymorphism di di prepareStatement query DBMS 
+
 @WebServlet(urlPatterns = {"/AuthController/*"})
 public class AuthController extends HttpServlet {
 
@@ -21,6 +25,12 @@ public class AuthController extends HttpServlet {
             return;
         }
 
+        //routing pathInfo 
+        //request.getServletPath() hasilnya /AuthController
+        //getPathInfo() hasilnya seperti /login /register
+        //panggil metode request response
+        //Encapsulation URL
+
         if (pathInfo.startsWith("/login")) {
             showLoginPage(request, response);
         } else if (pathInfo.startsWith("/register")) {
@@ -32,7 +42,7 @@ public class AuthController extends HttpServlet {
         } else if (pathInfo.startsWith("/laporan")) {
             redirectToLaporan(request, response);
         } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND); //built-in error isi angka 404
         }
     }
 
@@ -70,6 +80,10 @@ public class AuthController extends HttpServlet {
 
     private void showLoginPage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        //dispatch URL /Fauzan/Login.jsp
+        //<form method="POST" action="/AuthController/login">
+        
         request.getRequestDispatcher("/Fauzan/Login.jsp").forward(request, response);
     }
 
@@ -81,13 +95,21 @@ public class AuthController extends HttpServlet {
     private void showUserManagementPage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        //session yang ada dipakai (cek karena ada security jika ingin melihat laman edit harus login/punya session)
+        //cek null jika tidak ada kembali ke login
+        
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/AuthController/login");
             return;
         }
 
+        //ambil user session (admin)
+        
         User admin = (User) session.getAttribute("user");
+        
+        //kalau bukan admin kembali ke login 
+        
         if (!"admin".equalsIgnoreCase(admin.getRole())) {
             response.sendRedirect(request.getContextPath() + "/AuthController/login");
             return;
@@ -100,6 +122,7 @@ public class AuthController extends HttpServlet {
         try {
             con = DBConnection.getConnection();
             st = con.createStatement();
+            //list user
             rs = st.executeQuery("SELECT * FROM users ORDER BY user_id");
 
             request.setAttribute("usersResultSet", rs);
@@ -132,23 +155,36 @@ public class AuthController extends HttpServlet {
             return;
         }
 
+        //query string untuk id di edit
+        
         String idParam = request.getParameter("id");
+        
+        //kalau kosong kembali ke view pengguna
+        
         if (idParam == null) {
             response.sendRedirect(request.getContextPath() + "/AuthController/admin/users");
             return;
         }
 
+        //deklarasi variabel database
+        
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
             int userId = Integer.parseInt(idParam);
+            
+            //konek database dan statement query
+            
             con = DBConnection.getConnection();
+            
             ps = con.prepareStatement(
                 "SELECT user_id, email, password, role, first_name, last_name, phone " +
                 "FROM users WHERE user_id=?"
             );
+            
+            //add user Id ke dalam ? pertama / 1
             ps.setInt(1, userId);
             rs = ps.executeQuery();
 
@@ -161,6 +197,7 @@ public class AuthController extends HttpServlet {
                 userToEdit.setFirstName(rs.getString("first_name"));
                 userToEdit.setLastName(rs.getString("last_name"));
                 userToEdit.setPhoneNumber(rs.getString("phone"));
+
 
                 request.setAttribute("userToEdit", userToEdit);
                 request.getRequestDispatcher("/Fauzan/EditUser.jsp")
@@ -193,9 +230,13 @@ public class AuthController extends HttpServlet {
     private void processLogin(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        //input yang dipakai atau fetch dari lama login
+        
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        //koneksi database sesuai modul praktikum
+        
         Connection con = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -224,11 +265,12 @@ public class AuthController extends HttpServlet {
 
                 if ("admin".equalsIgnoreCase(user.getRole())) {
                     response.sendRedirect(
-                        request.getContextPath() + "/AuthController/laporan?user_id=" + user.getId()
+                        //getId() untuk path menggunakan implementasi interface 
+                        request.getContextPath() + "/LaporanController?user_id=" + user.getId()
                     );
                 } else {
                     response.sendRedirect(
-                        request.getContextPath() + "/AuthController/laporan?user_id=" + user.getId()
+                        request.getContextPath() + "/LaporanController?user_id=" + user.getId()
                     );
                 }
             } else {
@@ -365,6 +407,9 @@ public class AuthController extends HttpServlet {
                 );
             }
         } finally {
+            
+            //
+            
             if (ps != null) ps.close();
             if (con != null) con.close();
         }
