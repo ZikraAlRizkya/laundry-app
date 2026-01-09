@@ -1,1 +1,5 @@
-/dist/
+/laundry-app/build/
+/laundry-app/dist/
+/laundry-app/nbproject/private/
+*.class
+*.jar
