@@ -14,10 +14,8 @@ public class User {
     private String phoneNumber;
     private Date birthDate;
 
-    // ===== Constructor =====
     public User() {}
 
-    // ===== Getters & Setters =====
 
     public int getId() {
         return id;
@@ -55,7 +53,6 @@ public class User {
         return password;
     }
 
-    // ⚠️ Only use when needed (never expose in JSP)
     public void setPassword(String password) {
         this.password = password;
     }
